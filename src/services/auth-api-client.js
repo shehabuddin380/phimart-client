@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const authApiClient = axios.create({
-  baseURL: "https://phimart.vercel.app/api/v1/",
+  baseURL: "https://phi-mart-pied.vercel.app/api/v1/auth/",
 });
 
 export default authApiClient;
