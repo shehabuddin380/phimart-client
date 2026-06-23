@@ -2,23 +2,28 @@ import { useCallback, useEffect, useState } from "react";
 import authApiClient from "../services/auth-api-client";
 
 const useCart = () => {
-  const [authToken] = useState(
-    () => JSON.parse(localStorage.getItem("authTokens"))?.access
-  );
   const [cart, setCart] = useState(null);
   const [cartId, setCartId] = useState(() => localStorage.getItem("cartId"));
   const [loading, setLoading] = useState(false);
 
-  // Crate a new cart
+  // Create or Get cart
   const createOrGetCart = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await authApiClient.post("/carts/");
-      if (!cartId) {
-        localStorage.setItem("cartId", response.data.id);
-        setCartId(response.data.id);
+      if (cartId) {
+        // cartId exists, fetch cart details
+        const response = await authApiClient.get(`/carts/${cartId}/`);
+        setCart(response.data);
+        return cartId;
+      } else {
+        //new cartId 
+        const response = await authApiClient.post("/carts/");
+        const newCartId = response.data.id;
+        localStorage.setItem("cartId", newCartId);
+        setCartId(newCartId);
+        setCart(response.data);
+        return newCartId;
       }
-      setCart(response.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -30,12 +35,16 @@ const useCart = () => {
   const AddCartItems = useCallback(
     async (product_id, quantity) => {
       setLoading(true);
-      if (!cartId) await createOrGetCart();
       try {
-        const response = await authApiClient.post(`/carts/${cartId}/items/`, {
-          product_id,
-          quantity,
-        });
+        
+        let currentCartId = cartId;
+        if (!currentCartId) {
+          currentCartId = await createOrGetCart();
+        }
+        const response = await authApiClient.post(
+          `/carts/${currentCartId}/items/`,
+          { product_id, quantity }
+        );
         return response.data;
       } catch (error) {
         console.log("Error adding Items", error);
@@ -79,7 +88,7 @@ const useCart = () => {
       setLoading(false);
     };
     initializeCart();
-  }, [createOrGetCart]);
+  }, []); 
 
   return {
     cart,
