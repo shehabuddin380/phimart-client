@@ -4,8 +4,6 @@ const authApiClient = axios.create({
   baseURL: "https://phi-mart-pied.vercel.app/api/v1/",
 });
 
-export default authApiClient;
-
 authApiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("authTokens");
@@ -16,3 +14,5 @@ authApiClient.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+
+export default authApiClient;
