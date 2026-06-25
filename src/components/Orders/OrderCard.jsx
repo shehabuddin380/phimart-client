@@ -15,7 +15,6 @@ const OrderCard = ({ order, onCancel }) => {
         `/orders/${order.id}/update_status/`,
         { status: newStatus }
       );
-      console.log(response);
       if (response.status === 200) {
         setStatus(newStatus);
         alert(response.data.status);
@@ -28,20 +27,14 @@ const OrderCard = ({ order, onCancel }) => {
   const handlePayment = async () => {
     setLoading(true);
     try {
-      const response = await authApiClient.post("/payment/initiate/", {
-        amount: order.total_price,
-        orderId: order.id,
-        numItems: order.items?.length,
-      });
-
-      if (response.data.payment_url) {
-        setLoading(false);
-        window.location.href = response.data.payment_url;
-      } else {
-        alert("Payment failed");
-      }
+      const response = await authApiClient.post(
+        `/orders/${order.id}/payment/initiate/`
+      );
+      window.location.href = response.data.url;
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -74,7 +67,7 @@ const OrderCard = ({ order, onCancel }) => {
               {order.status}
             </span>
           )}
-          {order.status !== "Deliverd" &&
+          {order.status !== "Delivered" &&
             order.status !== "Canceled" &&
             !user.is_staff && (
               <button
@@ -88,7 +81,6 @@ const OrderCard = ({ order, onCancel }) => {
       </div>
       <div className="p-6">
         <h3 className="font-medium text-lg mb-4">Order Items</h3>
-        {/* Order Items Table  */}
         <OrderTable items={order.items} />
       </div>
       <div className="border-t p-6 flex flex-col items-end">
