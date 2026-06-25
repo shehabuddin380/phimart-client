@@ -14,7 +14,11 @@ const CartSummary = ({ totalPrice, itemCount, cartId }) => {
       const order = await authApiClient.post("/orders/", { cart_id: cartId });
       if (order.status === 201) {
         deleteCart();
-        alert("Order placed successfully");
+        // Stripe payment এ redirect
+        const payment = await authApiClient.post(
+          `/orders/${order.data.id}/payment/initiate/`
+        );
+        window.location.href = payment.data.url;
       }
     } catch (error) {
       console.log(error);
