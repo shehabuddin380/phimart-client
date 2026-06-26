@@ -9,15 +9,35 @@ const useCart = () => {
   const createOrGetCart = useCallback(async () => {
     setLoading(true);
     try {
-      // cart POST করো — backend get_or_create করবে
-      const response = await authApiClient.post("/carts/");
-      const newCartId = response.data.id;
-      localStorage.setItem("cartId", newCartId);
-      setCartId(newCartId);
-      setCart(response.data);
-      return newCartId;
+      const storedCartId = localStorage.getItem("cartId");
+      if (storedCartId) {
+        // Previous cart GET 
+        const response = await authApiClient.get(`/carts/${storedCartId}/`);
+        setCart(response.data);
+        setCartId(storedCartId);
+        return storedCartId;
+      } else {
+        // New cart POST
+        const response = await authApiClient.post("/carts/");
+        const newCartId = response.data.id;
+        localStorage.setItem("cartId", newCartId);
+        setCartId(newCartId);
+        setCart(response.data);
+        return newCartId;
+      }
     } catch (error) {
-      console.log(error);
+      // cart If not, make a new one.
+      localStorage.removeItem("cartId");
+      try {
+        const response = await authApiClient.post("/carts/");
+        const newCartId = response.data.id;
+        localStorage.setItem("cartId", newCartId);
+        setCartId(newCartId);
+        setCart(response.data);
+        return newCartId;
+      } catch (err) {
+        console.log(err);
+      }
     } finally {
       setLoading(false);
     }
