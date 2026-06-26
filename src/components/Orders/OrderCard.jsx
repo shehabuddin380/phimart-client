@@ -39,11 +39,11 @@ const OrderCard = ({ order, onCancel }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg mb-8 overflow-hidden">
-      <div className="bg-gray-100 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div className="bg-base-100 border border-base-300 rounded-lg shadow-lg mb-8 overflow-hidden">
+      <div className="bg-base-200 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h2 className="text-lg font-bold">Order #{order.id}</h2>
-          <p className="text-gray-600 text-sm">Placed on {order.created_at}</p>
+          <p className="text-base-content/60 text-sm">Placed on {order.created_at}</p>
         </div>
         <div className="flex gap-2">
           {user.is_staff ? (
@@ -72,7 +72,7 @@ const OrderCard = ({ order, onCancel }) => {
             !user.is_staff && (
               <button
                 onClick={() => onCancel(order.id)}
-                className="text-blue-700 hover:underline"
+                className="text-blue-500 hover:underline"
               >
                 Cancel
               </button>
@@ -83,7 +83,7 @@ const OrderCard = ({ order, onCancel }) => {
         <h3 className="font-medium text-lg mb-4">Order Items</h3>
         <OrderTable items={order.items} />
       </div>
-      <div className="border-t p-6 flex flex-col items-end">
+      <div className="border-t border-base-300 p-6 flex flex-col items-end">
         <div className="space-y-2 w-full max-w-[200px]">
           <div className="flex justify-between">
             <span>Subtotal:</span>
@@ -93,7 +93,7 @@ const OrderCard = ({ order, onCancel }) => {
             <span>Shipping:</span>
             <span>$0.00</span>
           </div>
-          <div className="flex justify-between font-bold border-t pt-2">
+          <div className="flex justify-between font-bold border-t border-base-300 pt-2">
             <span>Total:</span>
             <span>${order.total_price.toFixed(2)}</span>
           </div>
