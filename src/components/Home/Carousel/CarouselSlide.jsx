@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import bgImg from "../../../assets/images/banner-image-bg.jpg";
 
 const CarouselSlide = ({ title, subtitle, image }) => {
@@ -13,9 +14,9 @@ const CarouselSlide = ({ title, subtitle, image }) => {
             {title}
           </h1>
           <p className="text-gray-600 my-4">{subtitle}</p>
-          <button className="btn btn-secondary px-6 py-3 rounded-full shadow-md">
+          <Link to="/shop" className="btn btn-secondary px-6 py-3 rounded-full shadow-md">
             Shop Product
-          </button>
+          </Link>
         </div>
 
         {/* Right Image  */}
@@ -24,7 +25,7 @@ const CarouselSlide = ({ title, subtitle, image }) => {
             className="max-w-full md:max-w-md drop-shadow-lg"
             src={image}
             alt=""
-          />{" "}
+          />
         </div>
       </div>
     </section>
