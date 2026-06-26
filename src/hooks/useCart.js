@@ -6,37 +6,27 @@ const useCart = () => {
   const [cartId, setCartId] = useState(() => localStorage.getItem("cartId"));
   const [loading, setLoading] = useState(false);
 
-  // Create or Get cart
   const createOrGetCart = useCallback(async () => {
     setLoading(true);
     try {
-      if (cartId) {
-        // cartId exists, fetch cart details
-        const response = await authApiClient.get(`/carts/${cartId}/`);
-        setCart(response.data);
-        return cartId;
-      } else {
-        //new cartId 
-        const response = await authApiClient.post("/carts/");
-        const newCartId = response.data.id;
-        localStorage.setItem("cartId", newCartId);
-        setCartId(newCartId);
-        setCart(response.data);
-        return newCartId;
-      }
+      // cart POST করো — backend get_or_create করবে
+      const response = await authApiClient.post("/carts/");
+      const newCartId = response.data.id;
+      localStorage.setItem("cartId", newCartId);
+      setCartId(newCartId);
+      setCart(response.data);
+      return newCartId;
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-  }, [cartId]);
+  }, []);
 
-  // Add items to the cart
   const AddCartItems = useCallback(
     async (product_id, quantity) => {
       setLoading(true);
       try {
-        
         let currentCartId = cartId;
         if (!currentCartId) {
           currentCartId = await createOrGetCart();
@@ -55,7 +45,6 @@ const useCart = () => {
     [cartId, createOrGetCart]
   );
 
-  // Update Item quantity
   const updateCartItemQuantity = useCallback(
     async (itemId, quantity) => {
       try {
@@ -69,7 +58,6 @@ const useCart = () => {
     [cartId]
   );
 
-  // Delete Cart Items
   const deleteCartItems = useCallback(
     async (itemId) => {
       try {
@@ -88,7 +76,7 @@ const useCart = () => {
       setLoading(false);
     };
     initializeCart();
-  }, []); 
+  }, []);
 
   return {
     cart,
