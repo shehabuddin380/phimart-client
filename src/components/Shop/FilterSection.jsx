@@ -12,11 +12,10 @@ const FilterSection = ({
   return (
     <div className="mb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {/* Price Range */}
-      <div className="bg-white p-4 rounded-lg shadow">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+      <div className="bg-base-100 border border-base-300 p-4 rounded-lg shadow">
+        <label className="block text-sm font-medium mb-2">
           Price Range
         </label>
-        {/* Min Range  */}
         <div className="flex items-center space-x-4">
           <input
             type="number"
@@ -24,7 +23,7 @@ const FilterSection = ({
             max={priceRange[1]}
             value={priceRange[0]}
             onChange={(e) => handlePriceChange(0, Number(e.target.value))}
-            className="w-20 p-2 border rounded-md"
+            className="w-20 p-2 border border-base-300 rounded-md bg-base-100"
           />
           <input
             type="range"
@@ -36,40 +35,38 @@ const FilterSection = ({
             className="w-full"
           />
         </div>
-        {/* Max Range  */}
         <div className="flex items-center space-x-4">
           <input
             type="number"
             min={priceRange[0]}
-            max="1000"
+            max="10000"
             value={priceRange[1]}
             onChange={(e) => handlePriceChange(1, Number(e.target.value))}
-            className="w-20 p-2 border rounded-md"
+            className="w-20 p-2 border border-base-300 rounded-md bg-base-100"
           />
           <input
             type="range"
             min={priceRange[0]}
-            max="1000"
+            max="10000"
             step="10"
             value={priceRange[1]}
             onChange={(e) => handlePriceChange(1, Number(e.target.value))}
             className="w-full"
           />
         </div>
-
-        <div className="flex justify-between text-sm text-gray-600 mt-2">
+        <div className="flex justify-between text-sm mt-2">
           <span>${priceRange[0]}</span>
           <span>${priceRange[1]}</span>
         </div>
       </div>
 
       {/* Category Filter */}
-      <div className="bg-white p-4 rounded-lg shadow">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+      <div className="bg-base-100 border border-base-300 p-4 rounded-lg shadow">
+        <label className="block text-sm font-medium mb-2">
           Category
         </label>
         <select
-          className="w-full p-2 border rounded-md"
+          className="w-full p-2 border border-base-300 rounded-md bg-base-100"
           value={selectedCategory}
           onChange={(e) => handleCategoryChange(e.target.value)}
         >
@@ -83,26 +80,26 @@ const FilterSection = ({
       </div>
 
       {/* Search */}
-      <div className="bg-white p-4 rounded-lg shadow">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+      <div className="bg-base-100 border border-base-300 p-4 rounded-lg shadow">
+        <label className="block text-sm font-medium mb-2">
           Search
         </label>
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => handleSearchQuery(e.target.value)}
-          placeholder="Search books..."
-          className="w-full p-2 border rounded-md"
+          placeholder="Search products..."
+          className="w-full p-2 border border-base-300 rounded-md bg-base-100"
         />
       </div>
 
-      {/* Sorting  */}
-      <div className="bg-white p-4 rounded-lg shadow">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+      {/* Sorting */}
+      <div className="bg-base-100 border border-base-300 p-4 rounded-lg shadow">
+        <label className="block text-sm font-medium mb-2">
           Sort By Price
         </label>
         <select
-          className="w-full p-2 border rounded-md"
+          className="w-full p-2 border border-base-300 rounded-md bg-base-100"
           value={sortOrder}
           onChange={(e) => handleSorting(e.target.value)}
         >
