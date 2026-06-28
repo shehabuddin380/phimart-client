@@ -6,7 +6,7 @@ const Order = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axiosInstance.get("orders/")
+    authApiClient.get("orders/")
       .then((res) => {
         setOrders(res.data.results || res.data);
         setLoading(false);
