@@ -7,7 +7,7 @@ import useFetchCategories from "../../hooks/useFetchCategories";
 
 const ShopPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [priceRange, setPriceRange] = useState([0, 10000]);
   const [selectedCategory, setSelecetedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("");
