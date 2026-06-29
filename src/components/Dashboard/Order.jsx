@@ -62,7 +62,7 @@ const Order = () => {
                 orders.map((order) => (
                   <tr key={order.id}>
                     <td>#ORD-{String(order.id).slice(0, 4).toUpperCase()}</td>
-                    <td>{order.user || "N/A"}</td>
+                    <td>{order.user_email || "N/A"}</td>
                     <td>
                       <div className={getStatusBadge(order.status)}>
                         {order.status}
